@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PhotoService } from './photos/photo/photo.service'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Course Alura Angular';
-  photos = [
-    {
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sultan_the_Barbary_Lion.jpg/440px-Sultan_the_Barbary_Lion.jpg',
-      imageDescription: 'Leão'
-    },
-    {
-      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Lioness_Etosha_NP.jpg/500px-Lioness_Etosha_NP.jpg',
-      imageDescription: 'Leoa'
-    }
-  ];
+  photos: Object[] = [];
+
+  constructor(private photoService: PhotoService) {}
+
+  ngOnInit(): void {
+    this.photoService
+      .listFromUser('flavio')
+      .subscribe(photos => this.photos = photos)
+  }
 }
